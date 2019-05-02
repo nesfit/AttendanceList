@@ -1,0 +1,22 @@
+services:
+  backend:
+    image: nesatfit/attendance-list-backend
+    ports:
+      - XXXX:3000
+    command: npm start
+    volumes:
+        - backend:/usr/app/backend
+    restart: always
+
+  frontend:
+    image: nesatfit/attendance-list-frontend:latest
+    ports:
+      - XXXX:80
+    command: node serve.js
+    volumes:
+        - frontend:/usr/app/frontend
+    restart: always
+
+  volumes:
+     backend:
+     frontend:
