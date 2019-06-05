@@ -32,11 +32,11 @@ const props = {
 const propsConf = [
   {
     propName: props.AUTH_TOKEN,
-    persist: true,
+    persist: false,
   },
   {
     propName: props.TOKEN_VALID,
-    persist: true,
+    persist: false,
   },
   {
     propName: props.GRANTED_POINTS,

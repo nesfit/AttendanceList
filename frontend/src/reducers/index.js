@@ -9,7 +9,8 @@ import {
     DELETE_NOTIFICATION,
     DELETE_ITEM,
     LOADING_ON,
-    LOADING_OFF
+    LOADING_OFF,
+    DEAUTH_USER
 } from "../actions/actionTypes";
 
 const initialState = { reloadTicker: null };
@@ -36,6 +37,8 @@ const deleteItem = dissoc('item');
 const setLoadingOn = assoc('loading', true);
 const setLoadingOff = assoc('loading', false);
 
+const deauthUser = dissoc('user');
+
 const reducers = {
     [USER_LOGIN]: loginReducer,
     [COURSE_INFO_RECEIVED]: courseInfoReceived,
@@ -46,6 +49,7 @@ const reducers = {
     [DELETE_NOTIFICATION]: deleteNotification,
     [LOADING_ON]: setLoadingOn,
     [LOADING_OFF]: setLoadingOff,
+    [DEAUTH_USER]: deauthUser,
     fallback: identity
 };
 

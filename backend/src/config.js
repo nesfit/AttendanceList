@@ -11,9 +11,9 @@ const config = {
     rejectUnauthorized: false,
   },
   wisAgentOptions: {
-    key: fs.readFileSync('crts/client-key.pem'),
-    cert: fs.readFileSync('crts/client-crt.pem'),
-    ca: fs.readFileSync('crts/ca-crt.pem'),
+    //key: fs.readFileSync('crts/client-key.pem'),
+    //cert: fs.readFileSync('crts/client-crt.pem'),
+    //ca: fs.readFileSync('crts/ca-crt.pem'),
     host: 'wis.fit.vutbr.cz',
     port: '443',
     path: '/',

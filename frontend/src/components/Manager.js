@@ -21,7 +21,8 @@ import store from '../store';
 import CourseInfo from './CourseInfo';
 import ItemInfo from './ItemInfo';
 
-import {loadCourse, deleteItem} from '../actions';
+import {loadCourse, deleteItem, logoutUser} from '../actions';
+import Paper from "./SignIn";
 
 const drawerWidth = 240;
 
@@ -89,6 +90,10 @@ const styles = theme => ({
     },
     inputInput: {
         margin: '10px',
+    },
+    logout: {
+        color: 'white',
+        fontSize: '1.5em',
     }
 });
 
@@ -102,59 +107,87 @@ const handleSearchKeyDown = e => {
     store.dispatch(loadCourse(abbrev));
 };
 
+const handleDeauthUser = () => {
+    console.log('OK');
+
+    store.dispatch(logoutUser());
+};
+
 const bodyElement = ({course, item}) => {
-    if(course && item) {
-        return <ItemInfo />;
+    if (course && item) {
+        return <ItemInfo/>;
     }
 
-    if(course) {
-        return <CourseInfo />;
+    if (course) {
+        return <CourseInfo/>;
     }
 
     return 'Nothing loaded';
 };
 
-const Dashboard = props => {
-    const {classes} = props;
-    const state = store.getState();
+class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="absolute" className={classNames(classes.appBar)} >
-                <Toolbar className={classes.toolbar}>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        className={classes.title}
-                    >
-                        Dashboard
-                    </Typography>
+        this.state = {searchText: ''};
+    }
 
-                    { state.loading ? <CircularProgress className={classes.progress} color="secondary"/> : null }
-                </Toolbar>
-            </AppBar>
-            <Drawer  variant="permanent" classes={{ paper: classNames(classes.drawerPaper) }} >
-                <div className={classes.toolbarIcon}>
-                    <IconButton><ChevronLeftIcon /></IconButton>
-                </div>
-                <Divider />
-                <List><InputBase
-                    placeholder="Subject abbreviation"
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    onKeyDown={handleSearchKeyDown}
-                    defaultValue={state.courseSearchAbbrev}
-                /></List>
-            </Drawer>
-            { bodyElement(state) }
-        </div>
-    );
-};
+    searchTextChange = e => {
+        const val = e.target.value || '';
+        const newText = val.toUpperCase();
+
+        this.setState({searchText: newText});
+    };
+
+    render() {
+        const {classes} = this.props;
+        const {searchText} = this.state;
+
+        const state = store.getState();
+
+        return (
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar position="absolute" className={classNames(classes.appBar)}>
+                    <Toolbar className={classes.toolbar}>
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            noWrap
+                            className={classes.title}
+                        >
+                            Dashboard
+                        </Typography>
+
+                        {state.loading ? <CircularProgress className={classes.progress} color="secondary"/> : null}
+
+                        <span className={classNames(classes.logout)} onClick={handleDeauthUser}> Logout </span>
+
+                    </Toolbar>
+                </AppBar>
+                <Drawer variant="permanent" classes={{paper: classNames(classes.drawerPaper)}}>
+                    <div className={classes.toolbarIcon}>
+                        <IconButton><ChevronLeftIcon/></IconButton>
+                    </div>
+                    <Divider/>
+                    <List><InputBase
+                        placeholder="Subject abbreviation"
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        value={searchText}
+                        onChange={this.searchTextChange}
+                        onKeyDown={handleSearchKeyDown}
+                        defaultValue={state.courseSearchAbbrev}
+                    /></List>
+                </Drawer>
+                {bodyElement(state)}
+            </div>
+        );
+    }
+}
 
 Dashboard.propTypes = {
     classes: PropTypes.object.isRequired,

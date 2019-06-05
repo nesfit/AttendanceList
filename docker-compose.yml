@@ -1,8 +1,13 @@
+version: '3.7'
+
 services:
   backend:
     image: nesatfit/attendance-list-backend
     ports:
-      - XXXX:3000
+      - target: 3000
+        published: 3000
+      - target: 3001
+        published: 3001
     command: npm start
     volumes:
         - backend:/usr/app/backend
@@ -11,12 +16,14 @@ services:
   frontend:
     image: nesatfit/attendance-list-frontend:latest
     ports:
-      - XXXX:80
+      - target: 4000
+        published: 80
     command: node serve.js
     volumes:
         - frontend:/usr/app/frontend
+        - frontend:/usr/app/frontend/node_modules
     restart: always
 
-  volumes:
-     backend:
-     frontend:
+volumes:
+  backend:
+  frontend:

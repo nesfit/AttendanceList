@@ -45,11 +45,7 @@ const rpcCaller = (params, handler) => {
 		<param><value><int>${update}</int></value></param>
 	</params>
 </methodCall>
-
-Valid
-<param><value><dateTime.iso8601>20190425T14:08:55</dateTime.iso8601></value></param>
-<param><value><datetime.iso8601>20190425T13:15:17.663Z</datetime.iso8601></value></param>
-Invalid`;
+`;
 
   const token = state.authToken.get();
 

@@ -1,8 +1,10 @@
 FROM node:8
 
 WORKDIR nesatfit/attendance-list-backend
-COPY package*.json ./
 
-RUN npm install
+RUN npm install express
+COPY backend/package*.json ./
+COPY backend .
 
-COPY . .
+RUN pwd
+RUN ls -al

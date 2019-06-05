@@ -3,10 +3,8 @@ import axios from 'axios';
 import store from './store';
 import {setLoadingOff, setLoadingOn} from './actions/loadingActions';
 
-const ROOT = 'http://localhost:3001';
+const ROOT = 'https://attendancelist-api.nesad.fit.vutbr.cz';
 const API_ROOT = `${ROOT}/api/app/`;
-
-const SET_AUTH_TOKEN_URL = `auth_token`;
 
 const axiosCaller = axios.create();
 
@@ -32,11 +30,16 @@ export const authUser = ({login, pass}) => {
     const token = btoa(`${login}:${pass}`);
 
     return request({
-        url: SET_AUTH_TOKEN_URL,
+        url: 'auth_token',
         method: 'post',
         data: {token}
     });
 };
+
+export const deauthUser = () => request({
+    url: 'auth_token',
+    method: 'delete'
+});
 
 export const getCourseByAbbrev = abbrev => request({
     url: `course?abbrv=${abbrev}`,

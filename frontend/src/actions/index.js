@@ -1,6 +1,6 @@
 import {path, pipe, isNil} from 'ramda';
 
-import {authUser, getCourseByAbbrev, getItemInfo, setItemPoints, setActiveItem} from "../api";
+import {authUser, deauthUser, getCourseByAbbrev, getItemInfo, setItemPoints, setActiveItem} from "../api";
 import {
     USER_LOGIN,
     USER_LOGIN_SEND,
@@ -17,6 +17,7 @@ import {
     POINTS_SAVED,
     POINTS_SAVE_ERROR,
     ACTIVE_ITEM_SET,
+    DEAUTH_USER
 } from './actionTypes';
 
 import store from '../store';
@@ -168,4 +169,10 @@ export const setItemActive = info => {
         .catch(() => addError('Connection error'));
 
     return { type: ACTIVE_ITEM_SET };
+};
+
+export const logoutUser = () => {
+    deauthUser();
+
+    return { type: DEAUTH_USER };
 };
